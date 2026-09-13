@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .box {
+      background: white;
+      width: 90%;
+      max-width: 350px;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+      box-sizing: border-box;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #1976d2;
+      color: white;
+      font-size: 16px;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>Login Form</h2>
+
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+
+  <button id="register">Register</button>
+  <button id="login">Login</button>
+  <button id="logout">Logout</button>
+
+  <p id="message"></p>
+</div>
+
+<script type="module">
+
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+} from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBaQj4D0QcbxelvEb2Vr3ihNNBSxKPodrk",
+  authDomain: "login-form-7bf1e.firebaseapp.com",
+  projectId: "login-form-7bf1e",
+  storageBucket: "login-form-7bf1e.firebasestorage.app",
+  messagingSenderId: "69534190359",
+  appId: "1:69534190359:web:11c0e12553ca72aa470552"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const message = document.getElementById("message");
+
+
+document.getElementById("register").onclick = async () => {
+
+  try {
+    await createUserWithEmailAndPassword(
+      auth,
+      email.value,
+      password.value
+    );
+
+    message.innerText = "Registration successful!";
+  }
+
+  catch (error) {
+    message.innerText = error.message;
+  }
+
+};
+
+
+document.getElementById("login").onclick = async () => {
+
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      email.value,
+      password.value
+    );
+
+    message.innerText = "Login successful!";
+  }
+
+  catch (error) {
+    message.innerText = error.message;
+  }
+
+};
+
+
+document.getElementById("logout").onclick = async () => {
+
+  await signOut(auth);
+
+  message.innerText = "Logged out.";
+};
+
+</script>
+
+</body>
+</html>
